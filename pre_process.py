@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-operators = ["+", "-", "/", "*", "mod"]
+operators = ["+", "-", "/", "*", "^", "mod", "log", "sin", "cos"]
 numbers = ["1", "2", "3", "4", "5", "6", "8", "9", "0", "."]
 
 
@@ -12,13 +12,13 @@ def pre_process(compilable):
     while not_done:
         one_character = compilable[count]
         three_characters = compilable[count:(count+3)]
-        
+
         if checkIfOperator(one_character):
             preProcessed.append(one_character)
 
         elif checkIfOperator(three_characters):
             preProcessed.append(three_characters)
-            count += 3
+            count += 2
 
         elif checkIfNumber(one_character):
             shift = 1
