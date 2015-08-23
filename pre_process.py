@@ -4,6 +4,8 @@ operators = ["+", "-", "/", "*", "^", "mod", "log", "sin", "cos"]
 numbers = ["1", "2", "3", "4", "5", "6", "8", "9", "0", "."]
 
 
+# Takes standard mathematical expressions
+# and returns a list of terms and operators
 def pre_process(compilable):
     preProcessed = []
     not_done = True
