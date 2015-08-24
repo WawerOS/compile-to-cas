@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-operators = ["+", "-", "/", "*", "^", "mod", "log", "sin", "cos", "cot", "tan", "sec", "csc"]
+operators = ["+", "-", "/", "*", "^", "mod", "log", "sin", "cos", "cot", "tan",
+             "sec", "csc"]
 numbers = ["1", "2", "3", "4", "5", "6", "8", "9", "0", "."]
 
 
