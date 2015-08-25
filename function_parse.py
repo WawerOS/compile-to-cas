@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# TODO Reformat into one loop with three options
 import general_functions
 
 dictionary_bi_op = {"mod": "_", "/": "*", "-": "+"}
