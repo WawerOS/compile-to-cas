@@ -4,7 +4,6 @@ import sys
 import pre_process
 import function_parse
 
-
 def main():
     compilable = sys.argv[1]
     print(compilable)
