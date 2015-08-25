@@ -34,7 +34,7 @@ def format_inverse(parseable):
 # Changes all side by side non-numerical values into
 # multiplied versions of these values
 def format_multiplication(parseable):
-    for i in range(len(parseable)):
+    for i in range(len(parseable)-1):
         is_not_bi_op = lambda x: x not in ["*", "+", "/", "-", "mod", "log"]
         if is_not_bi_op(parseable[i]) and is_not_bi_op(parseable[i+1]):
             if parseable[i] != "(" and parseable[i+1] != ")":
