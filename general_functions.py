@@ -8,9 +8,11 @@ def insert_list(parseable, insertable, insert_at):
     return parseable
 
 
-def first_parantheses(parseable, i):
+def first_occurence(parseable, i, findable):
     char = parseable[i]
-    while char != ")":
+    while char != findable and i <= len(parseable):
         i += 1
         char = parseable[i]
+    if char != findable:
+        return -1
     return i

@@ -50,7 +50,7 @@ def format_trig(parseable):
     i = 0
     while i < len(parseable):
         if parseable[i] in trig_list:
-            span = general_functions.first_parantheses(parseable, i)
+            span = general_functions.first_occurence(parseable, i, ")")
             input_ = parseable[i+2:span]
             tan_or_sec = lambda x: x == "tan" or x == "cot"
             templates = {"tan": ["sin", "(", ")", "*", "cos", "(", ")", "^", "-1"],
@@ -59,6 +59,7 @@ def format_trig(parseable):
                          "csc": ["sin", "(", ")", "^", "-1"]}
             adjusted = format_trig_tmeplate(templates[parseable[i]], input_,
                                             tan_or_sec(parseable[i]))
+            print("%s len is %s" % (parseable[span], span))
             del parseable[i:span+1]
             general_functions.insert_list(parseable, adjusted, i)
         i += 1
@@ -68,7 +69,7 @@ def format_trig(parseable):
 # Used to allow more reusable code
 def format_inverse_template(parseable, insertable, i):
     if parseable[i+1] in trig_list or parseable[i] in ["sin", "cos", "("]:
-        insert_at = general_functions.first_parantheses(parseable, i) + 1
+        insert_at = general_functions.first_occurence(parseable, i, ")") + 1
     else:
         insert_at = i + 2
     parseable = general_functions.insert_list(parseable, insertable, insert_at)
