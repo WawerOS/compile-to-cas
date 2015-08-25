@@ -3,6 +3,8 @@
 import sys
 import pre_process
 import function_parse
+import order_of_computation
+
 
 def main():
     compilable = sys.argv[1]
@@ -11,6 +13,6 @@ def main():
     print(preProcessed)
     parsed = function_parse.function_parse(preProcessed)
     print(parsed)
+    result = order_of_computation.order_span(parsed, 0, len(parsed)-1)
 
-if __name__ == '__main__':
-    main()
+main()
