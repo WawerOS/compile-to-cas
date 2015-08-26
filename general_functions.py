@@ -9,10 +9,15 @@ def insert_list(parseable, insertable, insert_at):
 
 
 def first_occurence(parseable, i, findable):
-    char = parseable[i]
-    while char != findable and i <= len(parseable):
-        i += 1
+    if i < len(parseable):
         char = parseable[i]
+    else:
+        return -1
+    while char != findable and i < len(parseable):
+        i += 1
+        if i < len(parseable):
+            char = parseable[i]
+
     if char != findable:
         return -1
     return i
