@@ -2,7 +2,7 @@
 import general_functions
 
 nary_op = ["+", "*"]
-binary_op = ["^", "mod", "log"]
+binary_op = ["^", "mod", "log", "="]
 unary_op = {"sin": "~", "cos": "&"}
 unary_op_plus = ["sin", "cos"]
 op = ["+", "*", "^", "mod", "log", "sin", "cos"]
@@ -29,20 +29,9 @@ def order_span(orderable, start_at, end_at):
 
     orderable = kill_parentheses(orderable, start_at, end_at)
 
-    l = start_at
-    while l < end_at and l < len(orderable):
-        if orderable[l] in unary_op_plus:
-            replacement = "%s(%s)" % (unary_op[orderable[l]], orderable[l+1])
-            print("%s at %s" % (orderable, l))
-            del orderable[l:l+2]
-            orderable.insert(l, replacement)
-            end_at = find_end(orderable, start_at)
-            if end_at == -1:
-                end_at = 2 ** 32
-            # print("%s at %s" % (orderable, l))
-        l += 1
-        print("l: %s, len(orderable):%s" % (l, end_at))
-        print(orderable)
+    orderable_tuple = unary_op_template(orderable, start_at, end_at)
+    orderable = orderable_tuple[0]
+    end_at = orderable_tuple[1]
 
     orderable_tuple = binary_op_template(orderable, start_at, end_at, "^", "^")
     orderable = orderable_tuple[0]
@@ -68,6 +57,21 @@ def order_span(orderable, start_at, end_at):
     if end_at != -1 and end_at == len(orderable) - 1:
         del orderable[end_at]
     return orderable
+
+
+def unary_op_template(orderable, start_at, end_at):
+    l = start_at
+    while l < end_at and l < len(orderable):
+        if orderable[l] in unary_op_plus:
+            replacement = "%s(%s)" % (unary_op[orderable[l]], orderable[l+1])
+            print("%s at %s" % (orderable, l))
+            del orderable[l:l+2]
+            orderable.insert(l, replacement)
+            end_at = find_end(orderable, start_at)
+            if end_at == -1:
+                end_at = 2 ** 32
+        l += 1
+    return (orderable, end_at)
 
 
 def binary_op_template(orderable, start_at, end_at, op, symbol):

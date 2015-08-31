@@ -1,3 +1,3 @@
 #!/usr/bin/env python3
 
-restricted_chars = ["+", "*", "^", "?"]
+restricted_chars = ["+", "*", "^", "%", "_", "~", "&", "=", "(", ",", ")"]
