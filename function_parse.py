@@ -57,8 +57,8 @@ def format_trig(parseable):
                          "cot": ["cos", "(", ")", "*", "sin", "(", ")", "^", "-1"],
                          "sec": ["cos", "(", ")", "^", "-1"],
                          "csc": ["sin", "(", ")", "^", "-1"]}
-            adjusted = format_trig_tmeplate(templates[parseable[i]], input_,
-                                            tan_or_sec(parseable[i]))
+            adjusted = format_trig_tmeplate(templates[parseable[i]], input_, tan_or_sec(parseable[i]))
+
             del parseable[i:span+1]
             general_functions.insert_list(parseable, adjusted, i)
         i += 1
