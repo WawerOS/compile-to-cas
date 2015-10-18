@@ -14,7 +14,6 @@ def order_span(orderable, start_at, end_at):
     recusive_start = 0
     while i < end_at:
         recusive_start = general_functions.first_occurence(orderable, i, "(")
-        #print(recusive_start)
 
         if recusive_start == -1:
             break
@@ -23,7 +22,6 @@ def order_span(orderable, start_at, end_at):
                                                              recusive_start,
                                                              ")")
             orderable = order_span(orderable, recusive_start, recusive_end)
-            #print(orderable)
 
         i += 1
 
@@ -64,7 +62,6 @@ def unary_op_template(orderable, start_at, end_at):
     while l < end_at and l < len(orderable):
         if orderable[l] in unary_op_plus:
             replacement = "%s(%s)" % (unary_op[orderable[l]], orderable[l+1])
-            print("%s at %s" % (orderable, l))
             del orderable[l:l+2]
             orderable.insert(l, replacement)
             end_at = find_end(orderable, start_at)

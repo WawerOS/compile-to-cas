@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import string
-restricted_chars = ["+", "*", "^", "%", "_", "~", "&", "=", "(", ",", ")"]
+restricted_chars = ["+","-", "*", "^", "%", "_", "~", "&", "=", "(", ",", ")"]
 
 
 def var_format(formatable):
