@@ -12,7 +12,7 @@ def order_span(orderable, start_at, end_at):
     i = start_at + 1
     recusive_end = 0
     recusive_start = 0
-    while i < end_at:
+    while i in range(end_at):
         recusive_start = general_functions.first_occurence(orderable, i, "(")
 
         if recusive_start == -1:
@@ -22,8 +22,6 @@ def order_span(orderable, start_at, end_at):
                                                              recusive_start,
                                                              ")")
             orderable = order_span(orderable, recusive_start, recusive_end)
-
-        i += 1
 
     orderable = kill_parentheses(orderable, start_at, end_at)
 
