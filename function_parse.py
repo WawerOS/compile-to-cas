@@ -16,8 +16,8 @@ def function_parse(parseable):
 # Changes all division into multiplication and subtraction into addtion.
 # Depends heavily on the format_inverse_template function.
 def format_inverse(parseable):
-    i = 0
-    while i < len(parseable):
+
+    for i in range(len(parseable)):
         if parseable[i] == "/":
             insertable = ["^", "-1"]
             parseable = format_inverse_template(parseable, insertable, i)
@@ -27,7 +27,7 @@ def format_inverse(parseable):
             insertable = ["*", "-1"]
             parseable = format_inverse_template(parseable, insertable, i)
             parseable[i] = "+"
-        i += 1
+
     return parseable
 
 
@@ -48,7 +48,7 @@ def format_multiplication(parseable):
 # Depends heavily on the format_trig_tmeplate
 def format_trig(parseable):
     i = 0
-    while i < len(parseable):
+    for i in range(len(parseable)):
         if parseable[i] in trig_list:
             span = general_functions.first_occurence(parseable, i, ")")
             input_ = parseable[i+2:span]
@@ -61,7 +61,7 @@ def format_trig(parseable):
 
             del parseable[i:span+1]
             general_functions.insert_list(parseable, adjusted, i)
-        i += 1
+            
     return parseable
 
 

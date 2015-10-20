@@ -8,6 +8,7 @@ import var_parse
 
 
 def main():
+
     compilable = sys.argv[1]
     preProcessed = pre_process.pre_process(compilable)
     parsed = function_parse.function_parse(preProcessed)
@@ -15,4 +16,5 @@ def main():
     result = var_parse.var_format(formatable)
     print(result)
 
-main()
+if  __name__ == '__main__':
+    main()
