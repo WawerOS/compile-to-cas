@@ -20,4 +20,5 @@ def first_occurence(parseable, i, findable):
 
     if char != findable:
         return -1
-    return i
+    else:    
+        return i
