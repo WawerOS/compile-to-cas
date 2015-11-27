@@ -4,6 +4,7 @@ import general_functions
 
 dictionary_bi_op = {"mod": "_", "/": "*", "-": "+"}
 trig_list = ["tan", "cot", "sec", "csc"]
+ex_trig_list = ["tan", "cot", "sec", "csc","cos","sin"]
 
 
 def function_parse(parseable):
@@ -35,12 +36,11 @@ def format_inverse(parseable):
 # multiplied versions of these values
 def format_multiplication(parseable):
     for i in range(len(parseable)-1):
-        is_not_bi_op = lambda x: x not in ["*", "+", "/", "-", "mod", "log"]
+        is_not_bi_op = lambda x: x not in ["*", "+", "/", "-", "mod", "log", "^"]
         if is_not_bi_op(parseable[i]) and is_not_bi_op(parseable[i+1]):
             if parseable[i] != "(" and parseable[i+1] != ")":
-                if parseable[i] not in trig_list and parseable[i + 1] != "(":
-                    if parseable[i] not in ["sin", "cos"] and parseable[i + 1] != "(":
-                        parseable.insert(i + 1, "*")
+                if parseable[i] not in ex_trig_list or parseable[i + 1] != "(":
+                    parseable.insert(i + 1, "*")
     return parseable
 
 
@@ -61,7 +61,7 @@ def format_trig(parseable):
 
             del parseable[i:span+1]
             general_functions.insert_list(parseable, adjusted, i)
-            
+
     return parseable
 
 

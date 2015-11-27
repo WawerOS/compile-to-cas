@@ -9,19 +9,22 @@ op = ["+", "*", "^", "mod", "log", "sin", "cos"]
 find_end = lambda orderable, start_at: general_functions.first_occurence(orderable, start_at, ")")
 
 def order_span(orderable, start_at, end_at):
+    print(orderable)
     i = start_at + 1
-    recusive_end = 0
-    recusive_start = 0
-    while i in range(end_at):
-        recusive_start = general_functions.first_occurence(orderable, i, "(")
+    recursive_end = 0
+    recursive_start = 0
+    for i in range(end_at-start_at):
+        recursive_start = general_functions.first_occurence(orderable, i+start_at, "(")
 
-        if recusive_start == -1:
+        if recursive_start == -1:
             break
-        elif recusive_start < end_at:
-            recusive_end = general_functions.first_occurence(orderable,
-                                                             recusive_start,
+        elif recursive_start < end_at and recursive_start > start_at:
+            
+            recursive_end = general_functions.first_occurence(orderable,
+                                                             recursive_start,
                                                              ")")
-            orderable = order_span(orderable, recusive_start, recusive_end)
+
+            orderable = order_span(orderable, recursive_start, recursive_end)
 
     orderable = kill_parentheses(orderable, start_at, end_at)
 
