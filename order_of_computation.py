@@ -8,74 +8,61 @@ unary_op_plus = ["sin", "cos"]
 op = ["+", "*", "^", "mod", "log", "sin", "cos"]
 find_end = lambda orderable, start_at: general_functions.first_occurence(orderable, start_at, ")")
 
-def order_span(orderable, start_at, end_at):
-    print(orderable)
-    i = start_at + 1
-    recursive_end = 0
-    recursive_start = 0
-    for i in range(end_at-start_at):
-        recursive_start = general_functions.first_occurence(orderable, i+start_at, "(")
+def order_span(orderable):
+
+    for i in range(len(orderable)):
+        recursive_start = general_functions.first_occurence(orderable, i, "(")
 
         if recursive_start == -1:
             break
-        elif recursive_start < end_at and recursive_start > start_at:
-            
+        else:
+
             recursive_end = general_functions.first_occurence(orderable,
                                                              recursive_start,
                                                              ")")
+            recursor = orderable[recursive_start+1:recursive_end]
+            recursed =  order_span(recursor)
+            del orderable  [recursive_start:recursive_end+1]
+            orderable = general_functions.insert_list(orderable,recursor,recursive_start)
 
-            orderable = order_span(orderable, recursive_start, recursive_end)
+    orderable = kill_parentheses(orderable)
 
-    orderable = kill_parentheses(orderable, start_at, end_at)
+    orderable = unary_op_template(orderable)
 
-    orderable_tuple = unary_op_template(orderable, start_at, end_at)
-    orderable = orderable_tuple[0]
-    end_at = orderable_tuple[1]
+    orderable = binary_op_template(orderable, "^", "^")
 
-    orderable_tuple = binary_op_template(orderable, start_at, end_at, "^", "^")
-    orderable = orderable_tuple[0]
-    end_at = orderable_tuple[1]
 
-    orderable_tuple = binary_op_template(orderable, start_at, end_at, "mod", "%")
-    orderable = orderable_tuple[0]
-    end_at = orderable_tuple[1]
+    orderable = binary_op_template(orderable, "mod", "%")
 
-    orderable_tuple = binary_op_template(orderable, start_at, end_at, "log", "_")
-    orderable = orderable_tuple[0]
-    end_at = orderable_tuple[1]
 
-    orderable_tuple = nary_op_template(orderable, start_at, end_at, "*")
-    orderable = orderable_tuple[0]
-    end_at = orderable_tuple[1]
+    orderable = binary_op_template(orderable, "log", "_")
 
-    orderable_tuple = nary_op_template(orderable, start_at, end_at, "+")
-    orderable = orderable_tuple[0]
-    end_at = orderable_tuple[1]
 
-    end_at = general_functions.first_occurence(orderable, start_at, ")")
+    orderable = nary_op_template(orderable, "*")
+
+
+    orderable = nary_op_template(orderable, "+")
+
+    end_at = general_functions.first_occurence(orderable, 0, ")")
     if end_at != -1 and end_at == len(orderable) - 1:
         del orderable[end_at]
     return orderable
 
 
-def unary_op_template(orderable, start_at, end_at):
-    l = start_at
-    while l < end_at and l < len(orderable):
-        if orderable[l] in unary_op_plus:
+def unary_op_template(orderable):
+    for l  in range(len(orderable)):
+        if l >= len(orderable):
+            break
+        elif orderable[l] in unary_op_plus:
             replacement = "%s(%s)" % (unary_op[orderable[l]], orderable[l+1])
             del orderable[l:l+2]
+
             orderable.insert(l, replacement)
-            end_at = find_end(orderable, start_at)
-            if end_at == -1:
-                end_at = 2 ** 32
-        l += 1
-    return (orderable, end_at)
+    return orderable
 
 
-def binary_op_template(orderable, start_at, end_at, op, symbol):
-    j = start_at
-
-    while j < end_at and j < len(orderable):
+def binary_op_template(orderable, op, symbol):
+    for j in range(len(orderable)):
         if orderable[j] == op:
             leftshift = 1
             rightshift = 1
@@ -87,17 +74,13 @@ def binary_op_template(orderable, start_at, end_at, op, symbol):
             replacement = symbol + replacement
             del orderable[j-1:j+2]
             orderable.insert(j-1, replacement)
-            end_at = find_end(orderable, start_at)
-            if end_at == -1:
-                end_at = 2 ** 32
-        j += 1
 
-    return (orderable, end_at)
+    return orderable
 
 
-def nary_op_template(orderable, start_at, end_at, op):
-    z = start_at
-    while z < end_at and z < len(orderable):
+def nary_op_template(orderable, op):
+    z = 0
+    while z < len(orderable):
         if orderable[z] == op:
             shift = 2
             replacement = "(%s" % (orderable[z-1])
@@ -111,18 +94,15 @@ def nary_op_template(orderable, start_at, end_at, op):
             replacement = op + replacement
             del orderable[save:z]
             orderable.insert(save, replacement)
-            end_at = find_end(orderable, start_at)
-            if end_at == -1:
-                end_at = 2 ** 32
+
             z -= 1
         z += 1
-    return (orderable, end_at)
+    return orderable
 
 
-def kill_parentheses(orderable, start_at, end_at):
-    for i in range(end_at - start_at):
-        current_val = i + start_at
-        if current_val > start_at and current_val < end_at and current_val < len(orderable):
-            if orderable[current_val] in ["(", ")"]:
+def kill_parentheses(orderable):
+    for i in range(len(orderable)):
+        current_val = i
+        if orderable[current_val] in ["(", ")"]:
                 del orderable[current_val]
     return orderable
