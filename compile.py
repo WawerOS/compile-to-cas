@@ -12,7 +12,7 @@ def main():
     compilable = sys.argv[1]
     preProcessed = pre_process.pre_process(compilable)
     parsed = function_parse.function_parse(preProcessed)
-    formatable = order_of_computation.order_span(parsed, 0, len(parsed)-1)
+    formatable = order_of_computation.order_span(parsed)
     result = var_parse.var_format(formatable)
     print(result)
 
